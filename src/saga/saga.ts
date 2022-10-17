@@ -1,7 +1,7 @@
 import {all, put, takeLatest} from 'redux-saga/effects';
 import {getlocationList, addNewLocation} from '../actions/actions'
 
-import locationsList  from '../utils/MarkerLocations';
+import {locationsList}  from '../utils/MarkerLocations';
 
 function* getMarkerLocations() {
     

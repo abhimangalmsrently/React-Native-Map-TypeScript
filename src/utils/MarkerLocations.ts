@@ -1,4 +1,4 @@
-export default locationsList = [
+export const locationsList = [
   {
     key: 0,
     latitude: 10.073232,
