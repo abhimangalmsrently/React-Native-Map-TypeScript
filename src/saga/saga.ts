@@ -3,17 +3,23 @@ import {getlocationList, addNewLocation} from '../actions/actions'
 
 import {locationsList}  from '../utils/MarkerLocations';
 
+import { mmkvStorage } from '../storage/Storage';
+import { MARKER_KEY } from '../constants/constants';
+
+
+ 
 function* getMarkerLocations() {
+  let response = locationsList;
     
-  const response = locationsList;
+      const markerLocation = mmkvStorage.getMarkers(MARKER_KEY);
+      response = markerLocation;
+   
 
   yield put(getlocationList(response));
 }
 
 
 function* addMarkerLocation(newMarker: any) {
-
-  console.log("___________________",newMarker)
   yield put(addNewLocation(newMarker.payload));
 }
 

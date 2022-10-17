@@ -1,25 +1,42 @@
-import React from 'react';
-import {View, FlatList, Alert, NativeEventEmitter} from 'react-native';
+import React, { useRef } from 'react';
+import { View, FlatList, Alert, NativeEventEmitter } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Animated, Marker } from 'react-native-maps';
 
-import {useSelector, useDispatch} from 'react-redux';
-import {getMarkerLocations, addMarkerLocation} from '../actions/actions';
-import {getPreciseDistance} from 'geolib';
-
-import Geocoder from 'react-native-geocoding';
-import Geolocation from 'react-native-geolocation-service';
+import { useSelector, useDispatch } from 'react-redux';
+import { getMarkerLocations, addMarkerLocation } from '../actions/actions';
+import { getPreciseDistance } from 'geolib';
 
 const MapScreen = () => {
-  const locationList = useSelector((state : any) => state.mapReducer.locations);
-  
-  
+
+  const locationList = useSelector((state: any) => state.mapReducer.locations);
+  let initialRegion = {
+    latitude: 0 ,
+    longitude: 0,
+    latitudeDelta: 0.0922 / 1,
+    longitudeDelta: 0.0521 / 1
+  }
+
   const dispatch = useDispatch();
+  const mapRef = useRef(null);
 
-   const addMarker = (coordinate : any) => {
+  React.useEffect(() => {
+    dispatch(getMarkerLocations());
 
-    console.log("locations", coordinate.nativeEvent);
+  }, []);
+
+  if (locationList.length) {
+    initialRegion = {
+      latitude: locationList[locationList.length - 1].latitude,
+      longitude: locationList[locationList.length - 1].longitude,
+      latitudeDelta: 0.0922 / 1,
+      longitudeDelta: 0.0521 / 1
+    }
+
+  }
+
+  const addMarker = (coordinate: any) => {
 
     const newMarker = {
       key: Math.random(),
@@ -47,11 +64,11 @@ const MapScreen = () => {
 
       Alert.alert(
         'Distance is between ' +
-          locationList[0].title +
-          ' & ' +
-          locationList[1].title +
-          ' is ' +
-          distance,
+        locationList[0].title +
+        ' & ' +
+        locationList[1].title +
+        ' is ' +
+        distance,
       );
     }
   }
@@ -66,19 +83,16 @@ const MapScreen = () => {
   return (
     <View style={AppStyles.centeredView}>
       <MapView
+        ref={mapRef}
         onLongPress={coordinate => {
-           addMarker(coordinate);
-
-
+          addMarker(coordinate);
         }}
-        style={AppStyles.mapStyle}
-        region={{
-          latitude: 10.073232,
-          longitude: 76.302765,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }}>
-        {locationList.map((marker : any) => (
+
+        // initialRegion={initialRegion}
+        region = {initialRegion}
+        
+        style={AppStyles.mapStyle}>
+        {locationList.map((marker: any) => (
           <Marker
             coordinate={{
               latitude: marker.latitude,

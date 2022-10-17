@@ -3,6 +3,8 @@ import { MMKV } from "react-native-mmkv";
 const storage = new MMKV();
 
 const setMarker = (key: string, value: any) => {
+    
+console.log("🚀 ~ file: Storage.ts ~ line 6 ~ setMarker ~ value", value)
 
     storage.set(key, value);
 
@@ -10,7 +12,7 @@ const setMarker = (key: string, value: any) => {
 
 const getMarkers = (key: string) => {
 
-    return storage.getString(key);
+    return JSON.parse(storage.getString(key)??"");
 
 }
 
