@@ -12,12 +12,12 @@ import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
 
 const MapScreen = () => {
-  const locationList = useSelector(state => state.mapReducer.locations);
+  const locationList = useSelector((state : any) => state.mapReducer.locations);
   
   
   const dispatch = useDispatch();
 
-   const addMarker = coordinate => {
+   const addMarker = (coordinate : any) => {
 
     console.log("locations", coordinate.nativeEvent);
 
@@ -45,7 +45,7 @@ const MapScreen = () => {
         },
       );
 
-      alert(
+      Alert.alert(
         'Distance is between ' +
           locationList[0].title +
           ' & ' +
@@ -78,7 +78,7 @@ const MapScreen = () => {
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}>
-        {locationList.map(marker => (
+        {locationList.map((marker : any) => (
           <Marker
             coordinate={{
               latitude: marker.latitude,
