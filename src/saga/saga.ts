@@ -11,8 +11,9 @@ function* getMarkerLocations() {
 }
 
 
-function* addMarkerLocation(newMarker) {
+function* addMarkerLocation(newMarker: any) {
 
+  console.log("___________________",newMarker)
   yield put(addNewLocation(newMarker.payload));
 }
 

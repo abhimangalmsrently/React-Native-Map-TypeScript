@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import AppStyles from '../utils/AppStyle';
 
-const CustomButton = props => {
+const CustomButton = (props: any)  => {
   return (
     <TouchableOpacity
       style={AppStyles.buttonTheme}

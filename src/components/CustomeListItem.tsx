@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import AppStyles from '../utils/AppStyle';
 
-const CustomListItem = props => {
+const CustomListItem = (props : any) => {
   return (
     <View style={AppStyles.listItem}>
       <Text style={AppStyles.headerText}>{props.title}</Text>
