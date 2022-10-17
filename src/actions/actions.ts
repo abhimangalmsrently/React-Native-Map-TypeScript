@@ -10,7 +10,7 @@ export const getMarkerLocations = () => {
         };
 };
 
-export const addMarkerLocation = (newMarker) => {
+export const addMarkerLocation = (newMarker : any) => {
     return{
         type: 'callAddMarkerLocation',
         payload: newMarker
@@ -22,7 +22,7 @@ export const addMarkerLocation = (newMarker) => {
 /**
  * *----calls from Saga to call Reducer
  */
-export const getlocationList = (response) => { 
+export const getlocationList = (response : any) => { 
         return{
             type: GET_LOCATIONS,
             payload: response,
@@ -30,7 +30,7 @@ export const getlocationList = (response) => {
     
 };
 
-export const addNewLocation = (newMarker) => { 
+export const addNewLocation = (newMarker : any) => { 
 
     return{
         type: ADD_LOCATION,
