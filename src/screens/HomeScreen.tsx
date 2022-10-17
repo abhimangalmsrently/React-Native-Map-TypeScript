@@ -4,7 +4,6 @@ import MapScreen from './MapScreen';
 import LocationListScreen from './LocationListScreen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-vector-icons/Icon';
 
 const Tab = createBottomTabNavigator();
 
