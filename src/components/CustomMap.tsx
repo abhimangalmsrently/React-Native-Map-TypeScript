@@ -8,6 +8,10 @@ const CustomMap = (props: any) => {
             style={AppStyles.mapStyle}
             zoomEnabled={true}
             showsUserLocation={true}
+
+            // initialRegion={props.initialRegionProps}
+            region = {props.initialRegionProps}
+
             onLongPress={(coordinate) => props.onLongPressProps(coordinate)}>
 
             {props.locationListProps.map((marker: any) => (

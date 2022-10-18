@@ -1,4 +1,4 @@
-import {GET_LOCATIONS, ADD_LOCATION} from '../constants/constants';
+import {GET_LOCATIONS, ADD_LOCATION, REMOVE_LOCATIONS} from '../constants/constants';
 
 /**
  * *----calls from events
@@ -14,6 +14,12 @@ export const addMarkerLocation = (newMarker : any) => {
     return{
         type: 'callAddMarkerLocation',
         payload: newMarker
+    };
+}
+
+export const removeMarkers = () => {
+    return{
+        type: 'callRemoveMarkers' 
     };
 }
 
@@ -35,5 +41,12 @@ export const addNewLocation = (newMarker : any) => {
     return{
         type: ADD_LOCATION,
         payload: newMarker,
+      };
+};
+
+export const removeMarkerLocations = () => { 
+
+    return{
+        type: REMOVE_LOCATIONS
       };
 };

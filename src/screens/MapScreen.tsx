@@ -25,17 +25,17 @@ const MapScreen = () => {
   React.useEffect(() => {
     dispatch(getMarkerLocations());
 
-    if (locationList.length) {
-      initialRegion = {
-        latitude: locationList[locationList.length - 1].latitude,
-        longitude: locationList[locationList.length - 1].longitude,
-        latitudeDelta: 0.0922 / 1,
-        longitudeDelta: 0.0521 / 1
-      }
+  }, []);
 
+  if (locationList.length) {
+    initialRegion = {
+      latitude: locationList[locationList.length - 1].latitude,
+      longitude: locationList[locationList.length - 1].longitude,
+      latitudeDelta: 0.0922 / 1,
+      longitudeDelta: 0.0521 / 1
     }
 
-  }, []);
+  }
 
   const addMarker = (coordinate: any) => {
 
@@ -90,6 +90,8 @@ const MapScreen = () => {
     <View style={AppStyles.centeredView}>
       <CustomMap 
         locationListProps = {locationList}
+        initialRegionProps = {initialRegion}
+        regionProps = {initialRegion}
         onLongPressProps = {(coordinate: any) => {
           addMarker(coordinate);
         }} />
