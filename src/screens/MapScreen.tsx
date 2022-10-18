@@ -5,7 +5,7 @@ import AppStyles from '../utils/AppStyle';
 import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getMarkerLocations, addMarkerLocation } from '../actions/actions';
+import { getMarkerLocations, addMarkerLocation, removeMarkers } from '../actions/actions';
 import { getPreciseDistance } from 'geolib';
 import CustomMap from '../components/CustomMap';
 
@@ -85,6 +85,11 @@ const MapScreen = () => {
     calculateDistance();
 
   };
+
+  const removeMarkerLocations = () => {
+    // to remove markers
+    dispatch(removeMarkers());
+  }
 
   return (
     <View style={AppStyles.centeredView}>

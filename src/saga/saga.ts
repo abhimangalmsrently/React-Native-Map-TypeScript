@@ -11,8 +11,13 @@ import { MARKER_KEY } from '../constants/constants';
 function* getMarkerLocations() {
   let response = locationsList;
     
-      const markerLocation = mmkvStorage.getMarkers(MARKER_KEY);
-      response = markerLocation;
+  if(mmkvStorage.contains(MARKER_KEY)){
+    const markerLocation = mmkvStorage.getMarkers(MARKER_KEY);
+    response = markerLocation;
+  }else{
+    response = locationsList;
+  }
+     
    
 
   yield put(getlocationList(response));

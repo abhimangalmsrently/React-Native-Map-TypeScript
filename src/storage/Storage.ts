@@ -3,8 +3,8 @@ import { MMKV } from "react-native-mmkv";
 const storage = new MMKV();
 
 const setMarker = (key: string, value: any) => {
-    
-console.log("🚀 ~ file: Storage.ts ~ line 6 ~ setMarker ~ value", value)
+
+    console.log("🚀 ~ file: Storage.ts ~ line 6 ~ setMarker ~ value", value)
 
     storage.set(key, value);
 
@@ -21,8 +21,18 @@ const contains = (key: string) => {
     return storage.contains(key);
 }
 
+const deleteKeys = () => {
+
+    const markerKeys = storage.getAllKeys();
+    markerKeys.map((key) => {
+        storage.delete(key);
+    })
+}
+
+
 export const mmkvStorage = {
     setMarker,
     getMarkers,
-    contains
+    contains,
+    deleteKeys
 }
