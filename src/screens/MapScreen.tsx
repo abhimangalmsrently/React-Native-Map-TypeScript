@@ -2,17 +2,18 @@ import React, { useRef } from 'react';
 import { View, FlatList, Alert, NativeEventEmitter } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
-import MapView, { Animated, Marker } from 'react-native-maps';
+import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getMarkerLocations, addMarkerLocation } from '../actions/actions';
 import { getPreciseDistance } from 'geolib';
+import CustomMap from '../components/CustomMap';
 
 const MapScreen = () => {
 
   const locationList = useSelector((state: any) => state.mapReducer.locations);
   let initialRegion = {
-    latitude: 0 ,
+    latitude: 0,
     longitude: 0,
     latitudeDelta: 0.0922 / 1,
     longitudeDelta: 0.0521 / 1
@@ -24,17 +25,17 @@ const MapScreen = () => {
   React.useEffect(() => {
     dispatch(getMarkerLocations());
 
-  }, []);
+    if (locationList.length) {
+      initialRegion = {
+        latitude: locationList[locationList.length - 1].latitude,
+        longitude: locationList[locationList.length - 1].longitude,
+        latitudeDelta: 0.0922 / 1,
+        longitudeDelta: 0.0521 / 1
+      }
 
-  if (locationList.length) {
-    initialRegion = {
-      latitude: locationList[locationList.length - 1].latitude,
-      longitude: locationList[locationList.length - 1].longitude,
-      latitudeDelta: 0.0922 / 1,
-      longitudeDelta: 0.0521 / 1
     }
 
-  }
+  }, []);
 
   const addMarker = (coordinate: any) => {
 
@@ -82,27 +83,10 @@ const MapScreen = () => {
 
   return (
     <View style={AppStyles.centeredView}>
-      <MapView
-        ref={mapRef}
-        onLongPress={coordinate => {
+      <CustomMap locationList={locationList}
+        onLongPressProps={(coordinate: any) => {
           addMarker(coordinate);
-        }}
-
-        // initialRegion={initialRegion}
-        region = {initialRegion}
-        
-        style={AppStyles.mapStyle}>
-        {locationList.map((marker: any) => (
-          <Marker
-            coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-            }}
-            title={marker.title}
-            description={marker.Description}
-          />
-        ))}
-      </MapView>
+        }} />
       <CustomButton title={'Show markers '} onClick={() => getLocations()} />
     </View>
   );
