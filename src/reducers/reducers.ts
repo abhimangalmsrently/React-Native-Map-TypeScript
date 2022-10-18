@@ -1,4 +1,4 @@
-import { GET_LOCATIONS, ADD_LOCATION, MARKER_KEY } from '../constants/constants';
+import { GET_LOCATIONS, ADD_LOCATION, MARKER_KEY, REMOVE_LOCATIONS } from '../constants/constants';
 import { mmkvStorage } from '../storage/Storage';
 
 
@@ -17,10 +17,14 @@ function mapReducer(state = initialState, action: any) {
       };
 
     case ADD_LOCATION:
-      console.log("ADD_LOCATION", state)
 
       mmkvStorage.setMarker(MARKER_KEY, JSON.stringify([...state.locations, action.payload]))
 
+      case REMOVE_LOCATIONS:
+  
+      mmkvStorage.deleteKeys();
+        
+  
       return {
         ...state,
         locations: [...state.locations, action.payload]
