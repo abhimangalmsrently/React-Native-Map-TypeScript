@@ -43,9 +43,11 @@ const MapScreen = () => {
       key: Math.random(),
       latitude: coordinate.nativeEvent.coordinate.latitude,
       longitude: coordinate.nativeEvent.coordinate.longitude,
-      title: 'Unknown',
+      title: 'Unknown location',
       Description: 'No Descrpition',
     }
+
+    // adding new marker to MMKV
     dispatch(addMarkerLocation(newMarker));
   };
 
@@ -65,9 +67,9 @@ const MapScreen = () => {
 
       Alert.alert(
         'Distance is between ' +
-        locationList[0].title +
+        locationList[locationList.length -1].title +
         ' & ' +
-        locationList[1].title +
+        locationList[locationList.length -2].title +
         ' is ' +
         distance,
       );
@@ -75,19 +77,25 @@ const MapScreen = () => {
   }
 
   const getLocations = () => {
+    
+    // get marker locations from MMKV
     dispatch(getMarkerLocations());
 
+    //calculate distance between 2 markers
     calculateDistance();
 
   };
 
   return (
     <View style={AppStyles.centeredView}>
-      <CustomMap locationList={locationList}
-        onLongPressProps={(coordinate: any) => {
+      <CustomMap 
+        locationListProps = {locationList}
+        onLongPressProps = {(coordinate: any) => {
           addMarker(coordinate);
         }} />
-      <CustomButton title={'Show markers '} onClick={() => getLocations()} />
+      <CustomButton 
+        title={'Show markers'} 
+        onClick={() => getLocations()} />
     </View>
   );
 };
