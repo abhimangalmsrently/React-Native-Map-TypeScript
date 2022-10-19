@@ -9,8 +9,8 @@ const CustomMap = (props: any) => {
             zoomEnabled={true}
             showsUserLocation={true}
 
-            // initialRegion={props.initialRegionProps}
-            region = {props.initialRegionProps}
+            initialRegion={props.initialRegionProps}
+            region = {props.regionProps}
 
             onLongPress={(coordinate) => props.onLongPressProps(coordinate)}>
 

@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
-import { View, FlatList, Alert, NativeEventEmitter } from 'react-native';
+import { View, Alert} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
-import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getMarkerLocations, addMarkerLocation, removeMarkers } from '../actions/actions';
@@ -17,8 +16,8 @@ const MapScreen = () => {
   let initialRegion = {
     latitude: 0,
     longitude: 0,
-    latitudeDelta: 0.0922 / 1,
-    longitudeDelta: 0.0521 / 1
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421
   }
 
   const mapRef = useRef(null);
@@ -32,8 +31,8 @@ const MapScreen = () => {
     initialRegion = {
       latitude: locationList[locationList.length - 1].latitude,
       longitude: locationList[locationList.length - 1].longitude,
-      latitudeDelta: 0.0922 / 1,
-      longitudeDelta: 0.0521 / 1
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421
     }
 
   }
