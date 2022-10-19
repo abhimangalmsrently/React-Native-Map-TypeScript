@@ -1,10 +1,11 @@
 import React from "react";
-import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
+import MapView, { AnimatedRegion, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import AppStyles from '../utils/AppStyle';
 
 const CustomMap = (props: any) => {
     return (
         <MapView
+        ref={props.mapRefProps}
             style={AppStyles.mapStyle}
             zoomEnabled={true}
             showsUserLocation={true}

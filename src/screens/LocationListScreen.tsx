@@ -19,7 +19,7 @@ const LocationListScreen = () => {
         renderItem={({item, index}) => {
           return (
             <CustomListItem
-            key = {item.key}
+              key = {index}
               title = {item.title}
               latitude =  {"Latitude: " + item.latitude}
               longitude = {"Longitude: " + item.longitude}

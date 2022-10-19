@@ -4,8 +4,6 @@ const storage = new MMKV();
 
 const setMarker = (key: string, value: any) => {
 
-    console.log("🚀 ~ file: Storage.ts ~ line 6 ~ setMarker ~ value", value)
-
     storage.set(key, value);
 
 }

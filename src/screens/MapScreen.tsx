@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Alert} from 'react-native';
+import { View, Alert } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
 
@@ -25,6 +25,16 @@ const MapScreen = () => {
   React.useEffect(() => {
     getLocations();
 
+
+    if(locationList.length){
+
+    console.log("🚀 ~ file: MapScreen.tsx ~ line 30 ~ React.useEffect ~ locationList", locationList)
+
+  
+      mapRef.current?.animateToRegion(initialRegion);
+
+    }
+    
   }, []);
 
   if (locationList.length) {
@@ -67,9 +77,9 @@ const MapScreen = () => {
 
       Alert.alert(
         'Distance is between ' +
-        locationList[locationList.length -1].title +
+        locationList[locationList.length - 1].title +
         ' & ' +
-        locationList[locationList.length -2].title +
+        locationList[locationList.length - 2].title +
         ' is ' +
         distance,
       );
@@ -77,7 +87,7 @@ const MapScreen = () => {
   }
 
   const getLocations = () => {
-    
+
     // get marker locations from MMKV
     dispatch(getMarkerLocations());
 
@@ -93,15 +103,16 @@ const MapScreen = () => {
 
   return (
     <View style={AppStyles.centeredView}>
-      <CustomMap 
-        locationListProps = {locationList}
-        initialRegionProps = {initialRegion}
-        regionProps = {initialRegion}
-        onLongPressProps = {(coordinate: any) => {
+      <CustomMap
+        mapRefProps={mapRef}
+        locationListProps={locationList}
+        initialRegionProps={initialRegion}
+        regionProps={initialRegion}
+        onLongPressProps={(coordinate: any) => {
           addMarker(coordinate);
         }} />
-      <CustomButton 
-        title={'Show markers'} 
+      <CustomButton
+        title={'Show markers'}
         onClick={() => removeMarkerLocations()} />
     </View>
   );
