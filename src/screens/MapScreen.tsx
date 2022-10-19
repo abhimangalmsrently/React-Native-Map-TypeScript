@@ -12,6 +12,8 @@ import CustomMap from '../components/CustomMap';
 const MapScreen = () => {
 
   const locationList = useSelector((state: any) => state.mapReducer.locations);
+  const dispatch = useDispatch();
+
   let initialRegion = {
     latitude: 0,
     longitude: 0,
@@ -19,11 +21,10 @@ const MapScreen = () => {
     longitudeDelta: 0.0521 / 1
   }
 
-  const dispatch = useDispatch();
   const mapRef = useRef(null);
 
   React.useEffect(() => {
-    dispatch(getMarkerLocations());
+    getLocations();
 
   }, []);
 
@@ -82,7 +83,7 @@ const MapScreen = () => {
     dispatch(getMarkerLocations());
 
     //calculate distance between 2 markers
-    calculateDistance();
+    // calculateDistance();
 
   };
 
@@ -102,7 +103,7 @@ const MapScreen = () => {
         }} />
       <CustomButton 
         title={'Show markers'} 
-        onClick={() => getLocations()} />
+        onClick={() => removeMarkerLocations()} />
     </View>
   );
 };

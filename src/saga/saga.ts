@@ -7,7 +7,7 @@ import { mmkvStorage } from '../storage/Storage';
 import { MARKER_KEY } from '../constants/constants';
 
 
- 
+
 function* getMarkerLocations() {
   let response = locationsList;
     
@@ -18,8 +18,6 @@ function* getMarkerLocations() {
     response = locationsList;
   }
      
-   
-
   yield put(getlocationList(response));
 }
 
@@ -33,6 +31,7 @@ yield put(removeMarkerLocations())
 }
 
 /**--------------------listener and watcher---------------------- */
+
 function* sagaListener() {
   yield takeLatest('callGetLocation', getMarkerLocations);
   yield takeLatest('callAddMarkerLocation', addMarkerLocation);
