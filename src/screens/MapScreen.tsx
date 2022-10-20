@@ -1,17 +1,18 @@
-import React, { useRef } from 'react';
-import { View, Alert, Animated } from 'react-native';
+import React, {useRef} from 'react';
+import {View, Alert, Animated} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
 
-import { useCallback } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
-import { getMarkerLocations, addMarkerLocation, removeMarkers } from '../actions/actions';
-import { getPreciseDistance } from 'geolib';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  getMarkerLocations,
+  addMarkerLocation,
+  removeMarkers,
+} from '../actions/actions';
+import {getPreciseDistance} from 'geolib';
 import CustomMap from '../components/CustomMap';
-import { locationsList } from '../utils/MarkerLocations';
 
 const MapScreen = () => {
-
   let locationList = useSelector((state: any) => state.mapReducer.locations);
   const dispatch = useDispatch();
 
@@ -19,15 +20,14 @@ const MapScreen = () => {
     latitude: 0,
     longitude: 0,
     latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421
-  }
+    longitudeDelta: 0.0421,
+  };
 
   const mapRef = useRef(null);
 
   React.useEffect(() => {
     getLocations();
-
-  }, []);
+}, []);
 
   if (locationList.length) {
     initialRegion = {
