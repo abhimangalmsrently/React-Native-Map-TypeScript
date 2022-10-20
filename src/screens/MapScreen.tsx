@@ -1,16 +1,18 @@
 import React, { useRef } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Animated } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useCallback } from 'react';
+import { useSelector, useDispatch} from 'react-redux';
 import { getMarkerLocations, addMarkerLocation, removeMarkers } from '../actions/actions';
 import { getPreciseDistance } from 'geolib';
 import CustomMap from '../components/CustomMap';
+import { locationsList } from '../utils/MarkerLocations';
 
 const MapScreen = () => {
 
-  const locationList = useSelector((state: any) => state.mapReducer.locations);
+  let locationList = useSelector((state: any) => state.mapReducer.locations);
   const dispatch = useDispatch();
 
   let initialRegion = {
@@ -24,17 +26,8 @@ const MapScreen = () => {
 
   React.useEffect(() => {
     getLocations();
+    console.log("🚀 _______Remove markers")
 
-
-    if(locationList.length){
-
-    console.log("🚀 ~ file: MapScreen.tsx ~ line 30 ~ React.useEffect ~ locationList", locationList)
-
-  
-      mapRef.current?.animateToRegion(initialRegion);
-
-    }
-    
   }, []);
 
   if (locationList.length) {
@@ -99,6 +92,7 @@ const MapScreen = () => {
   const removeMarkerLocations = () => {
     // to remove markers
     dispatch(removeMarkers());
+    getLocations();
   }
 
   return (
