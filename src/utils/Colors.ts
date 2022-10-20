@@ -5,7 +5,7 @@ const Colors = {
     titleColor: '#00000F',
     textColor: '#000000',
     buttonTextColor: '#FFFF',
-    color: '#FFFF',
+    white: '#FFFF',
 
 
     deselectColor: '#00000F',
