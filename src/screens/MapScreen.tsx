@@ -26,7 +26,6 @@ const MapScreen = () => {
 
   React.useEffect(() => {
     getLocations();
-    console.log("🚀 _______Remove markers")
 
   }, []);
 
