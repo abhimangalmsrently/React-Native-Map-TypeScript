@@ -13,16 +13,16 @@ const AppStyles = StyleSheet.create({
     },
     
       buttonTheme: {
-        height: 68,
+        height: 58,
+        width: 58,
         backgroundColor: Colors.primaryColor,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 18,
-        margin: 12,
+        borderRadius: 60,
+        margin: 16,
         position: 'absolute',
         bottom: 0,
         right:0,
-        left: 0,
         
       },
       buttonTextTheme: {
