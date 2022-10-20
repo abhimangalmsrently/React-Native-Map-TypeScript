@@ -1,7 +1,8 @@
 import React, {useRef} from 'react';
-import {View, Alert, Animated} from 'react-native';
+import {View, Animated, Easing} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -9,7 +10,6 @@ import {
   addMarkerLocation,
   removeMarkers,
 } from '../actions/actions';
-import {getPreciseDistance} from 'geolib';
 import CustomMap from '../components/CustomMap';
 
 const MapScreen = () => {
@@ -25,74 +25,58 @@ const MapScreen = () => {
 
   const mapRef = useRef(null);
 
+  const spinValue = new Animated.Value(0);
+
+  const rotate = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   React.useEffect(() => {
     getLocations();
-}, []);
+  });
+
+  React.useEffect(() => {
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: 1500,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  });
 
   if (locationList.length) {
     initialRegion = {
       latitude: locationList[locationList.length - 1].latitude,
       longitude: locationList[locationList.length - 1].longitude,
       latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421
-    }
-
+      longitudeDelta: 0.0421,
+    };
   }
 
   const addMarker = (coordinate: any) => {
-
     const newMarker = {
       key: Math.random(),
       latitude: coordinate.nativeEvent.coordinate.latitude,
       longitude: coordinate.nativeEvent.coordinate.longitude,
       title: 'Unknown location',
       Description: 'No Descrpition',
-    }
+    };
 
     // adding new marker to MMKV
     dispatch(addMarkerLocation(newMarker));
   };
 
-  const calculateDistance = () => {
-
-    if (locationList && locationList.length) {
-      const distance = getPreciseDistance(
-        {
-          latitude: locationList[0].latitude,
-          longitude: locationList[0].longitude,
-        },
-        {
-          latitude: locationList[1].latitude,
-          longitude: locationList[1].longitude,
-        },
-      );
-
-      Alert.alert(
-        'Distance is between ' +
-        locationList[locationList.length - 1].title +
-        ' & ' +
-        locationList[locationList.length - 2].title +
-        ' is ' +
-        distance,
-      );
-    }
-  }
-
   const getLocations = () => {
-
     // get marker locations from MMKV
     dispatch(getMarkerLocations());
-
-    //calculate distance between 2 markers
-    // calculateDistance();
-
   };
 
   const removeMarkerLocations = () => {
     // to remove markers
     dispatch(removeMarkers());
     getLocations();
-  }
+  };
 
   return (
     <View style={AppStyles.centeredView}>
@@ -103,10 +87,15 @@ const MapScreen = () => {
         regionProps={initialRegion}
         onLongPressProps={(coordinate: any) => {
           addMarker(coordinate);
-        }} />
+        }}
+      />
+      <Animated.View style={{transform: [{rotate}]}}>
+        <AntDesign name={'loading1'} color={'blue'} size={50} />
+      </Animated.View>
       <CustomButton
         title={'Show markers'}
-        onClick={() => removeMarkerLocations()} />
+        onClick={() => removeMarkerLocations()}
+      />
     </View>
   );
 };
