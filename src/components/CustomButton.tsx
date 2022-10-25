@@ -10,7 +10,7 @@ const CustomButton = (props: any) => {
       style={AppStyles.buttonTheme}
       onPress={() => props.onClick()}>
       {/* <Text style={AppStyles.buttonTextTheme}>{props.title}</Text> */}
-      <Icon name="refresh" size={20} color={Colors.white} />
+      <Icon name="refresh" size={24} color={Colors.white} />
     </TouchableOpacity>
   );
 };
