@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
-import {View, Animated, Easing} from 'react-native';
+import React, { useRef } from 'react';
+import { View, Animated, Easing } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getMarkerLocations,
   addMarkerLocation,
@@ -32,17 +32,22 @@ const MapScreen = () => {
     outputRange: ['0deg', '360deg'],
   });
 
-  React.useEffect(() => {
-    getLocations();
-  });
-
-  React.useEffect(() => {
+  const spin = () => {
+    spinValue.setValue(0);
     Animated.timing(spinValue, {
       toValue: 1,
       duration: 1500,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
+  };
+/**---------useEffect----------*/
+  React.useEffect(() => {
+    getLocations();
+  }, []);
+
+  React.useEffect(() => {
+    spin();
   });
 
   if (locationList.length) {
@@ -89,7 +94,7 @@ const MapScreen = () => {
           addMarker(coordinate);
         }}
       />
-      <Animated.View style={{transform: [{rotate}]}}>
+      <Animated.View style={[{ position: 'absolute', right: 0, margin: 8 }, { transform: [{ rotate }] }]}>
         <AntDesign name={'loading1'} color={'blue'} size={50} />
       </Animated.View>
       <CustomButton
