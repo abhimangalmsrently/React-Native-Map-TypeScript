@@ -18,7 +18,7 @@ const MapScreen = () => {
   let locationList = useSelector((state: any) => state.mapReducer.locations);
   const dispatch = useDispatch();
 
-const [loading, setLoading] = useState(false); // show loading
+  const [loading, setLoading] = useState(false); // show loading
 
   let initialRegion = {
     latitude: 0,
@@ -46,7 +46,7 @@ const [loading, setLoading] = useState(false); // show loading
     },).start(() => setLoading(false));
 
   };
-/**---------useEffect----------*/
+  /**---------useEffect----------*/
   React.useEffect(() => {
     getLocations();
   }, []);
@@ -86,7 +86,7 @@ const [loading, setLoading] = useState(false); // show loading
   const removeMarkerLocations = () => {
     // to remove markers
     setLoading(true);
-    dispatch(removeMarkers());  
+    dispatch(removeMarkers());
     getLocations();
   };
 
@@ -103,8 +103,8 @@ const [loading, setLoading] = useState(false); // show loading
       />
       {loading && (
         <Animated.View style={[{ position: 'absolute', right: 0, margin: 8 }, { transform: [{rotate}] }]}>
-        <AntDesign name={'loading1'} color={'blue'} size={30} />
-      </Animated.View>
+          <AntDesign name={'loading1'} color={'blue'} size={30} />
+        </Animated.View>
       )}
       <CustomButton
         title={'Show markers'}
