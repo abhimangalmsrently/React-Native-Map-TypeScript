@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Animated, Easing } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
@@ -12,9 +12,13 @@ import {
 } from '../actions/actions';
 import CustomMap from '../components/CustomMap';
 
+
 const MapScreen = () => {
+
   let locationList = useSelector((state: any) => state.mapReducer.locations);
   const dispatch = useDispatch();
+
+const [loading, setLoading] = useState(false); // show loading
 
   let initialRegion = {
     latitude: 0,
@@ -28,7 +32,7 @@ const MapScreen = () => {
   const spinValue = new Animated.Value(0);
 
   const rotate = spinValue.interpolate({
-    inputRange: [0, 1],
+    inputRange: [0, 1], //spin value
     outputRange: ['0deg', '360deg'],
   });
 
@@ -39,7 +43,8 @@ const MapScreen = () => {
       duration: 1500,
       easing: Easing.linear,
       useNativeDriver: true,
-    }).start();
+    },).start(() => setLoading(false));
+
   };
 /**---------useEffect----------*/
   React.useEffect(() => {
@@ -60,6 +65,7 @@ const MapScreen = () => {
   }
 
   const addMarker = (coordinate: any) => {
+    setLoading(true);
     const newMarker = {
       key: Math.random(),
       latitude: coordinate.nativeEvent.coordinate.latitude,
@@ -79,7 +85,8 @@ const MapScreen = () => {
 
   const removeMarkerLocations = () => {
     // to remove markers
-    dispatch(removeMarkers());
+    setLoading(true);
+    dispatch(removeMarkers());  
     getLocations();
   };
 
@@ -94,9 +101,11 @@ const MapScreen = () => {
           addMarker(coordinate);
         }}
       />
-      <Animated.View style={[{ position: 'absolute', right: 0, margin: 8 }, { transform: [{ rotate }] }]}>
-        <AntDesign name={'loading1'} color={'blue'} size={50} />
+      {loading && (
+        <Animated.View style={[{ position: 'absolute', right: 0, margin: 8 }, { transform: [{rotate}] }]}>
+        <AntDesign name={'loading1'} color={'blue'} size={30} />
       </Animated.View>
+      )}
       <CustomButton
         title={'Show markers'}
         onClick={() => removeMarkerLocations()}
