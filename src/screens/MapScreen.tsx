@@ -19,7 +19,7 @@ const MapScreen = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false); // show loading
-  const [lastMarker, setLastMarker] = useState({}); 
+  const [lastMarker, setLastMarker] = useState({});  //last added marker
 
   let initialRegion = {
     latitude: 0,
@@ -97,7 +97,7 @@ const MapScreen = () => {
         locationListProps={locationList}
         initialRegionProps={initialRegion}
         regionProps={initialRegion}
-        lastMarkerProps={lastMarker}
+        lastMarkerProps={lastMarker} //for last added marker
 
         onLongPressProps={(coordinate: any) => {
           addMarker(coordinate);
