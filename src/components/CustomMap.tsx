@@ -9,8 +9,6 @@ import Colors from '../utils/Colors';
 
 const CustomMap = (props: any) => {
 
-    const [lastMarkerKey, setLastMarkerKey] = useState();
-
     const animatedScale = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -18,8 +16,6 @@ const CustomMap = (props: any) => {
     }, []);
 
     const markerHandler = (coordinate: any) => {
-
-
 
         animatedScale.setValue(0.5);
 
@@ -29,7 +25,6 @@ const CustomMap = (props: any) => {
             speed: 10,
             useNativeDriver: true
         }).start();
-
 
         props.onLongPressProps(coordinate);
 
@@ -45,7 +40,8 @@ const CustomMap = (props: any) => {
             initialRegion={props.initialRegionProps}
             region={props.regionProps}
 
-            onLongPress={(coordinate) => markerHandler(coordinate)}>
+            onLongPress={(coordinate) => markerHandler(coordinate)} //for animation and action
+            >
 
             {props.locationListProps.map((marker: any, index: any) => (
                 <Marker key={index}
@@ -55,7 +51,7 @@ const CustomMap = (props: any) => {
                     }}
                     title={marker.title}
                     description={marker.Description}>
-                    {props.lastMarkerProps === marker ?
+                    {props.lastMarkerProps === marker ? //check if it is, last added marker
                         <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
                             <Icon name="place" size={28} color={Colors.primaryColor} />
                         </Animated.View> :
