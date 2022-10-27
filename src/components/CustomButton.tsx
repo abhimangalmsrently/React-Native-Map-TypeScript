@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import AppStyles from '../utils/AppStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../utils/Colors';
@@ -12,38 +12,38 @@ const CustomButton = (props: any) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-      animatedScale.setValue(1);
+    animatedScale.setValue(1);
   }, []);
 
   const markerHandler = () => {
 
-      animatedScale.setValue(0.8); 
-      Animated.spring(animatedScale, {
-          toValue: 1,
-          bounciness: 8,
-          speed: 18,
-          useNativeDriver: true
-      }).start();
+    animatedScale.setValue(0.8);
+    Animated.spring(animatedScale, {
+      toValue: 1,
+      bounciness: 20,
+      speed: 24,
+      useNativeDriver: true
+    }).start();
 
-      props.onClick()
+    props.onClick()
 
   }
   return (
-    
-      <Animated.View style = {{transform : [{scale: animatedScale}]}}>
 
-<TouchableOpacity
-      style={AppStyles.buttonTheme}
-      onPress={markerHandler}>
 
-      {/* <Text style={AppStyles.buttonTextTheme}>{props.title}</Text> */}
-      <Icon name="refresh" size={24} color={Colors.white} />
+      <TouchableOpacity
+        style={AppStyles.buttonTheme}
+        onPress={markerHandler}>
+    <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
 
-    </TouchableOpacity>
+        {/* <Text style={AppStyles.buttonTextTheme}>{props.title}</Text> */}
+        <Icon name="refresh" size={24} color={Colors.white} />
+        </Animated.View>
 
-      </Animated.View>
+      </TouchableOpacity>
 
-      
+
+
   );
 };
 
