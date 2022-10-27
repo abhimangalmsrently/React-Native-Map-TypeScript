@@ -1,9 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated } from "react-native";
-import MapView, {Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import AppStyles from '../utils/AppStyle';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Colors from '../utils/Colors';
+
+
 const CustomMap = (props: any) => {
+
+    const [lastMarkerKey, setLastMarkerKey] = useState();
 
     const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -13,13 +19,17 @@ const CustomMap = (props: any) => {
 
     const markerHandler = (coordinate: any) => {
 
-        animatedScale.setValue(0.8); 
+
+
+        animatedScale.setValue(0.5);
+
         Animated.spring(animatedScale, {
             toValue: 1,
-            bounciness: 50,
+            bounciness: 24,
             speed: 10,
             useNativeDriver: true
         }).start();
+
 
         props.onLongPressProps(coordinate);
 
@@ -27,27 +37,32 @@ const CustomMap = (props: any) => {
 
     return (
         <MapView
-        ref={props.mapRefProps}
+            ref={props.mapRefProps}
             style={AppStyles.mapStyle}
             zoomEnabled={true}
             showsUserLocation={true}
 
             initialRegion={props.initialRegionProps}
-            region = {props.regionProps}
+            region={props.regionProps}
 
             onLongPress={(coordinate) => markerHandler(coordinate)}>
 
             {props.locationListProps.map((marker: any, index: any) => (
-               <Animated.View style = {{transform : [{scale: animatedScale}]}}>
-                 <Marker key={index}
+                <Marker key={index}
                     coordinate={{
                         latitude: marker.latitude,
                         longitude: marker.longitude,
                     }}
                     title={marker.title}
-                    description={marker.Description}
-                />
-               </Animated.View>
+                    description={marker.Description}>
+                    {props.lastMarkerProps === marker ?
+                        <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
+                            <Icon name="place" size={28} color={Colors.primaryColor} />
+                        </Animated.View> :
+                        <Icon name="place" size={28} color={Colors.primaryColor} />
+                    }
+
+                </Marker>
             ))}
         </MapView>
     )

@@ -19,6 +19,7 @@ const MapScreen = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false); // show loading
+  const [lastMarker, setLastMarker] = useState({}); 
 
   let initialRegion = {
     latitude: 0,
@@ -73,7 +74,7 @@ const MapScreen = () => {
       title: 'Unknown location',
       Description: 'No Descrpition',
     };
-
+    setLastMarker(newMarker);
     // adding new marker to MMKV
     dispatch(addMarkerLocation(newMarker));
   };
@@ -89,7 +90,6 @@ const MapScreen = () => {
     dispatch(removeMarkers());
     getLocations();
   };
-
   return (
     <View style={AppStyles.centeredView}>
       <CustomMap
@@ -97,6 +97,8 @@ const MapScreen = () => {
         locationListProps={locationList}
         initialRegionProps={initialRegion}
         regionProps={initialRegion}
+        lastMarkerProps={lastMarker}
+
         onLongPressProps={(coordinate: any) => {
           addMarker(coordinate);
         }}
