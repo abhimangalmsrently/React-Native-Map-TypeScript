@@ -16,6 +16,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={configureStore}>
+        
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen

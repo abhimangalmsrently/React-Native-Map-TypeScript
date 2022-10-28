@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import {View, FlatList, Text} from 'react-native';
 import CustomListItem from '../components/CustomeListItem';
-import CustomDescr from '../components/CustomDescr';
 
 import AppStyles from '../utils/AppStyle';
 
@@ -21,8 +20,9 @@ const LocationListScreen = () => {
             <CustomListItem
               key = {index}
               title = {item.title}
-              latitude =  {"Latitude: " + item.latitude}
-              longitude = {"Longitude: " + item.longitude}
+              Description = {item.description}
+              latitude =  {item.latitude}
+              longitude = {item.longitude}
             />
           );
         }}

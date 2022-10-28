@@ -6,8 +6,9 @@ import Colors from '../utils/Colors';
 
 import { Animated } from "react-native";
 import { useRef, useEffect } from 'react';
+import ButtonClickModel from '../model/ButtonClickModel';
 
-const CustomButton = (props: any) => {
+const CustomButton = (props: ButtonClickModel) => {
 
   const animatedScale = useRef(new Animated.Value(0)).current;
 

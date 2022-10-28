@@ -1,8 +1,9 @@
 import { MMKV } from "react-native-mmkv";
+import LocationModel from "../model/LocationModel";
 
 const storage = new MMKV();
 
-const setMarker = (key: string, value: any) => {
+const setMarker = (key: string, value: string) => {
 
     storage.set(key, value);
 

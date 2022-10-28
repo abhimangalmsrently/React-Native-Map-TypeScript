@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated } from "react-native";
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { LongPressEvent, Marker } from 'react-native-maps';
 import AppStyles from '../utils/AppStyle';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../utils/Colors';
+import MapPropModel from "../model/MapPropsModel";
+import LocationModel from "../model/LocationModel";
 
 
-const CustomMap = (props: any) => {
+const CustomMap = (props: MapPropModel) => {
 
     const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -15,8 +17,7 @@ const CustomMap = (props: any) => {
         animatedScale.setValue(1);
     }, []);
 
-    const markerHandler = (coordinate: any) => {
-
+    const markerHandler = (coordinate: LongPressEvent) => {
         animatedScale.setValue(0.5);
 
         Animated.spring(animatedScale, {
@@ -32,7 +33,6 @@ const CustomMap = (props: any) => {
 
     return (
         <MapView
-            ref={props.mapRefProps}
             style={AppStyles.mapStyle}
             zoomEnabled={true}
             showsUserLocation={true}
@@ -43,7 +43,7 @@ const CustomMap = (props: any) => {
             onLongPress={(coordinate) => markerHandler(coordinate)} //for animation and action
             >
 
-            {props.locationListProps.map((marker: any, index: any) => (
+            {props.locationListProps.map((marker: LocationModel, index: number) => (
                 <Marker key={index}
                     coordinate={{
                         latitude: marker.latitude,

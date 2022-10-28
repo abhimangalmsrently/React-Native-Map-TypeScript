@@ -15,7 +15,7 @@ function* getMarkerLocations() {
     const markerLocation = mmkvStorage.getMarkers(MARKER_KEY);
     response = markerLocation;
   }else{
-    response = locationsList;
+    response = [];
   }
      
   yield put(getlocationList(response));

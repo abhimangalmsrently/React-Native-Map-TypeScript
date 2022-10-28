@@ -19,11 +19,11 @@ const MapScreen = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false); // show loading
-  const [lastMarker, setLastMarker] = useState({});  //last added marker
+  const [lastMarker, setLastMarker] = useState({key: 0, latitude: 0 , longitude: 0, title : "", Description: ""});  //last added marker
 
   let initialRegion = {
-    latitude: 0,
-    longitude: 0,
+    latitude: 20.5937,
+    longitude: 78.9629,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
@@ -93,12 +93,10 @@ const MapScreen = () => {
   return (
     <View style={AppStyles.centeredView}>
       <CustomMap
-        mapRefProps={mapRef}
         locationListProps={locationList}
         initialRegionProps={initialRegion}
         regionProps={initialRegion}
         lastMarkerProps={lastMarker} //for last added marker
-
         onLongPressProps={(coordinate: any) => {
           addMarker(coordinate);
         }}
