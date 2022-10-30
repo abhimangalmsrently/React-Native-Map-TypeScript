@@ -9,32 +9,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-// const persistConfig = {
-//     key: 'root',
-//     storage: AsyncStorage
-// }
+const persistConfig = {
+    key: 'root',
+    storage: AsyncStorage
+}
+const initState = {}
 
-// const persistedReducer = persistReducer(persistConfig, mapReducer);
+const persistedReducer = persistReducer(persistConfig, mapReducer);
+
+const sagaMiddleware = saga();
+
+const middleWare = applyMiddleware(sagaMiddleware);
+export const configureStore = createStore(persistedReducer,  middleWare); 
+export const persistor = persistStore(configureStore);
+
+sagaMiddleware.run(sagaWatchers);
+
+
+// const rootReducer = combineReducers({mapReducer});
 
 // const sagaMiddleware = saga();
 
 // const middleWare = applyMiddleware(sagaMiddleware);
 
-// export const configureStore = createStore(persistedReducer,  middleWare); 
-// export const persistor = persistStore(configureStore);
+// const configureStore = createStore(rootReducer, {},  middleWare); 
+
+// export default configureStore;
+
 
 // sagaMiddleware.run(sagaWatchers);
-
-
-const rootReducer = combineReducers({mapReducer});
-
-const sagaMiddleware = saga();
-
-const middleWare = applyMiddleware(sagaMiddleware);
-
-const configureStore = createStore(rootReducer, {},  middleWare); 
-
-export default configureStore;
-
-
-sagaMiddleware.run(sagaWatchers);
