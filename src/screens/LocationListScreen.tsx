@@ -8,7 +8,7 @@ import AppStyles from '../utils/AppStyle';
 import {useSelector} from 'react-redux';
 
 const LocationListScreen = () => {
-  const locationList = useSelector((state : any )=> state.mapReducer.locations);
+  const locationList = useSelector((state : any )=> state.locations);
 
   return (
     <View style={AppStyles.centeredView}>
