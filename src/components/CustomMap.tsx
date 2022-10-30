@@ -42,7 +42,6 @@ const CustomMap = (props: MapPropModel) => {
 
             onLongPress={(coordinate) => markerHandler(coordinate)} //for animation and action
             >
-
             {props.locationListProps.map((marker: LocationModel, index: number) => (
                 <Marker key={index}
                     coordinate={{

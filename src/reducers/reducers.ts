@@ -7,9 +7,11 @@ const initialState = {
 
 function mapReducer(state = initialState, action: any) {
 
+
   switch (action.type) {
 
     case GET_LOCATIONS:
+
       return {
         ...state,
         locations: action.payload,
