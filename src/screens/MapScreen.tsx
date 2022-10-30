@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { View, Animated, Easing } from 'react-native';
+import { View, 
+  Animated, 
+  Easing, 
+  PermissionsAndroid } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import AppStyles from '../utils/AppStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
+import Geolocation from 'react-native-geolocation-service';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getMarkerLocations,
@@ -12,14 +15,51 @@ import {
 } from '../actions/actions';
 import CustomMap from '../components/CustomMap';
 
+ // Request Location Permission
+ const requestLocationPermission = async () =>{
+
+  try{
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+        title: 'Location permission',
+        message: 'This app requires location permission',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+
+      },
+    );
+
+    console.log('Granted', granted);
+
+    if(granted==='granted'){
+      console.log('Location granted');
+      return true;
+    }else{
+      console.log('Location Denied');
+      return false;
+    }
+
+  }catch(err){
+    return false;
+  }
+};
 
 const MapScreen = () => {
 
-  let locationList = useSelector((state: any) => state.mapReducer.locations);
+  let locationList = useSelector((state: any) => state.locations);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false); // show loading
+
+  const [region,setRegion] = useState({
+    latitude: 0.0,
+    longitude: 0.0,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0922,
+ });
+
   const [lastMarker, setLastMarker] = useState({key: 0, latitude: 0 , longitude: 0, title : "", Description: ""});  //last added marker
+
 
   let initialRegion = {
     latitude: 20.5937,
@@ -28,7 +68,34 @@ const MapScreen = () => {
     longitudeDelta: 0.0421,
   };
 
-  const mapRef = useRef(null);
+
+  const getLocation = () => {
+    const result = requestLocationPermission();
+    result.then(res => {
+      console.log('res is:', res);
+      if (res) {
+        Geolocation.getCurrentPosition(
+          position => {
+            console.log('_____________',position);
+           
+            setRegion({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0922,
+            })
+          
+          },
+          error => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      }
+    });
+  };
+
 
   const spinValue = new Animated.Value(0);
 
@@ -48,7 +115,9 @@ const MapScreen = () => {
 
   };
   /**---------useEffect----------*/
+
   React.useEffect(() => {
+    getLocation();
     getLocations();
   }, []);
 
@@ -56,13 +125,15 @@ const MapScreen = () => {
     spin();
   });
 
-  if (locationList.length) {
+  if (locationList && locationList.length) {
     initialRegion = {
       latitude: locationList[locationList.length - 1].latitude,
       longitude: locationList[locationList.length - 1].longitude,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     };
+  }else{
+    initialRegion = region;
   }
 
   const addMarker = (coordinate: any) => {
