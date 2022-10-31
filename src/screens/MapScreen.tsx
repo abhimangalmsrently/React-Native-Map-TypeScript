@@ -69,7 +69,7 @@ const MapScreen = () => {
   };
 
 
-  const getLocation = () => {
+  const getCurrentLocation = () => {
     const result = requestLocationPermission();
     result.then(res => {
       console.log('res is:', res);
@@ -117,7 +117,7 @@ const MapScreen = () => {
   /**---------useEffect----------*/
 
   React.useEffect(() => {
-    getLocation();
+    getCurrentLocation();
     getLocations();
   }, []);
 
