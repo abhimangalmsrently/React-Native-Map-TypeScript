@@ -5,6 +5,7 @@ import {locationsList}  from '../utils/MarkerLocations';
 
 import { mmkvStorage } from '../storage/Storage';
 import { MARKER_KEY } from '../constants/constants';
+import AddMarkerActionModel from '../model/AddMarkerActionModel';
 
 
 
@@ -22,7 +23,9 @@ function* getMarkerLocations() {
 }
 
 
-function* addMarkerLocation(newMarker: any) {
+function* addMarkerLocation(newMarker: AddMarkerActionModel) {
+  console.log('_____________',newMarker);
+
   yield put(addNewLocation(newMarker.payload));
 }
 
