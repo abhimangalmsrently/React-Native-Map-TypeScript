@@ -8,7 +8,6 @@ import AppStyles from '../utils/AppStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Geolocation from 'react-native-geolocation-service';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
 import {
   getMarkerLocations,
   addMarkerLocation,
