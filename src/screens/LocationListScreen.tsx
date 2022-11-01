@@ -6,9 +6,10 @@ import CustomListItem from '../components/CustomeListItem';
 import AppStyles from '../utils/AppStyle';
 
 import {useSelector} from 'react-redux';
+import StateModel from '../model/StateModel';
 
 const LocationListScreen = () => {
-  const locationList = useSelector((state : any )=> state.locations);
+  const locationList = useSelector((state : StateModel )=> state.locations);
 
   return (
     <View style={AppStyles.centeredView}>
@@ -20,7 +21,7 @@ const LocationListScreen = () => {
             <CustomListItem
               key = {index}
               title = {item.title}
-              Description = {item.description}
+              description = {item.description}
               latitude =  {item.latitude}
               longitude = {item.longitude}
             />
