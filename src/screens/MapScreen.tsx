@@ -14,7 +14,6 @@ import {
   removeMarkers,
 } from '../actions/actions';
 import CustomMap from '../components/CustomMap';
-import LocationModel from '../model/LocationModel';
 import { LongPressEvent } from 'react-native-maps';
 import StateModel from '../model/StateModel';
 
@@ -118,7 +117,7 @@ const MapScreen = () => {
 
   React.useEffect(() => {
     getCurrentLocation();
-    // getLocations();
+    getLocations();
   }, []);
 
   React.useEffect(() => {
