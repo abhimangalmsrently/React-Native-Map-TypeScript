@@ -4,7 +4,7 @@ interface LocationModel{
     latitude: number,
     longitude: number,
     title: string,
-    Description: string,
+    description: string,
   }
 
   export default LocationModel;
