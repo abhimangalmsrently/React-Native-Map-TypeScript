@@ -4,7 +4,6 @@ import saga from 'redux-saga';
 import sagaWatchers from '../saga/saga';
 
 import {persistStore, persistReducer} from 'redux-persist';
-import storage from 'redux-persist/lib/storage' 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -13,8 +12,6 @@ const persistConfig = {
     key: 'root',
     storage: AsyncStorage
 }
-const initState = {}
-
 const persistedReducer = persistReducer(persistConfig, mapReducer);
 
 const sagaMiddleware = saga();
@@ -22,6 +19,7 @@ const sagaMiddleware = saga();
 const middleWare = applyMiddleware(sagaMiddleware);
 export const configureStore = createStore(persistedReducer,  middleWare); 
 export const persistor = persistStore(configureStore);
+export type RootState = ReturnType<typeof configureStore.getState>
 
 sagaMiddleware.run(sagaWatchers);
 
