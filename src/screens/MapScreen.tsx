@@ -8,12 +8,16 @@ import AppStyles from '../utils/AppStyle';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Geolocation from 'react-native-geolocation-service';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/store';
 import {
   getMarkerLocations,
   addMarkerLocation,
   removeMarkers,
 } from '../actions/actions';
 import CustomMap from '../components/CustomMap';
+import LocationModel from '../model/LocationModel';
+import { LongPressEvent } from 'react-native-maps';
+import StateModel from '../model/StateModel';
 
  // Request Location Permission
  const requestLocationPermission = async () =>{
@@ -28,8 +32,6 @@ import CustomMap from '../components/CustomMap';
 
       },
     );
-
-    console.log('Granted', granted);
 
     if(granted==='granted'){
       console.log('Location granted');
@@ -46,7 +48,8 @@ import CustomMap from '../components/CustomMap';
 
 const MapScreen = () => {
 
-  let locationList = useSelector((state: any) => state.locations);
+  let locationList = useSelector((state: StateModel) => state.locations);
+  
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false); // show loading
@@ -58,7 +61,7 @@ const MapScreen = () => {
     longitudeDelta: 0.0922,
  });
 
-  const [lastMarker, setLastMarker] = useState({key: 0, latitude: 0 , longitude: 0, title : "", Description: ""});  //last added marker
+  const [lastMarker, setLastMarker] = useState({key: 0, latitude: 0 , longitude: 0, title : "", description: ""});  //last added marker
 
 
   let initialRegion = {
@@ -72,11 +75,9 @@ const MapScreen = () => {
   const getCurrentLocation = () => {
     const result = requestLocationPermission();
     result.then(res => {
-      console.log('res is:', res);
       if (res) {
         Geolocation.getCurrentPosition(
           position => {
-            console.log('_____________',position);
            
             setRegion({
               latitude: position.coords.latitude,
@@ -118,7 +119,7 @@ const MapScreen = () => {
 
   React.useEffect(() => {
     getCurrentLocation();
-    getLocations();
+    // getLocations();
   }, []);
 
   React.useEffect(() => {
@@ -136,14 +137,15 @@ const MapScreen = () => {
     initialRegion = region;
   }
 
-  const addMarker = (coordinate: any) => {
+  const addMarker = (coordinate: LongPressEvent) => {
+    
     setLoading(true);
     const newMarker = {
       key: Math.random(),
       latitude: coordinate.nativeEvent.coordinate.latitude,
       longitude: coordinate.nativeEvent.coordinate.longitude,
       title: 'Unknown location',
-      Description: 'No Descrpition',
+      description: 'No Descrpition',
     };
     setLastMarker(newMarker);
     // adding new marker to MMKV
@@ -159,7 +161,7 @@ const MapScreen = () => {
     // to remove markers
     setLoading(true);
     dispatch(removeMarkers());
-    getLocations();
+    // getLocations();
   };
   return (
     <View style={AppStyles.centeredView}>
@@ -168,7 +170,7 @@ const MapScreen = () => {
         initialRegionProps={initialRegion}
         regionProps={initialRegion}
         lastMarkerProps={lastMarker} //for last added marker
-        onLongPressProps={(coordinate: any) => {
+        onLongPressProps={(coordinate: LongPressEvent) => {
           addMarker(coordinate);
         }}
       />
