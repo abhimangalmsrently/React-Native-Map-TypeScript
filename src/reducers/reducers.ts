@@ -20,7 +20,7 @@ function mapReducer(state = initialState, action: AnyAction) {
 
     case ADD_LOCATION:
 
-      // mmkvStorage.setMarker(MARKER_KEY, JSON.stringify([...state.locations, action.payload]))
+      mmkvStorage.setMarker(MARKER_KEY, JSON.stringify([...state.locations, action.payload]))
 
       return {
         ...state,
@@ -29,11 +29,11 @@ function mapReducer(state = initialState, action: AnyAction) {
 
     case REMOVE_LOCATIONS:
 
-      // mmkvStorage.deleteKeys();
-      // return {
-      //   ...state,
-      //   locations: [...state.locations, action.payload]
-      // }
+      mmkvStorage.deleteKeys();
+      return {
+        ...state,
+        locations: [...state.locations, action.payload]
+      }
 
       return {
         ...initialState
