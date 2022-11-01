@@ -1,11 +1,12 @@
 import { GET_LOCATIONS, ADD_LOCATION, MARKER_KEY, REMOVE_LOCATIONS } from '../constants/constants';
 import { mmkvStorage } from '../storage/Storage';
+import { AnyAction } from 'redux';
 
 const initialState = {
   locations: []
 };
 
-function mapReducer(state = initialState, action: any) {
+function mapReducer(state = initialState, action: AnyAction) {
 
 
   switch (action.type) {
@@ -19,7 +20,7 @@ function mapReducer(state = initialState, action: any) {
 
     case ADD_LOCATION:
 
-      mmkvStorage.setMarker(MARKER_KEY, JSON.stringify([...state.locations, action.payload]))
+      // mmkvStorage.setMarker(MARKER_KEY, JSON.stringify([...state.locations, action.payload]))
 
       return {
         ...state,
@@ -28,7 +29,15 @@ function mapReducer(state = initialState, action: any) {
 
     case REMOVE_LOCATIONS:
 
-      mmkvStorage.deleteKeys();
+      // mmkvStorage.deleteKeys();
+      // return {
+      //   ...state,
+      //   locations: [...state.locations, action.payload]
+      // }
+
+      return {
+        ...initialState
+      }
         
     default:
       return state;
