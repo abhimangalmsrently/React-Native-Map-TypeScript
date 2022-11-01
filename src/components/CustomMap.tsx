@@ -49,7 +49,7 @@ const CustomMap = (props: MapPropModel) => {
                         longitude: marker.longitude,
                     }}
                     title={marker.title}
-                    description={marker.Description}>
+                    description={marker.description}>
                     {props.lastMarkerProps === marker ? //check if it is, last added marker
                         <Animated.View style={{ transform: [{ scale: animatedScale }] }}>
                             <Icon name="place" size={28} color={Colors.primaryColor} />
