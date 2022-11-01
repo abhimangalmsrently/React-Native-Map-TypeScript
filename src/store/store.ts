@@ -19,7 +19,6 @@ const sagaMiddleware = saga();
 const middleWare = applyMiddleware(sagaMiddleware);
 export const configureStore = createStore(persistedReducer,  middleWare); 
 export const persistor = persistStore(configureStore);
-export type RootState = ReturnType<typeof configureStore.getState>
 
 sagaMiddleware.run(sagaWatchers);
 
